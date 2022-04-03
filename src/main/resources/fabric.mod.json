@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "serversleepmod",
-  "version": "${version}",
+  "version": "1.0.1",
 
   "name": "Server Sleep Mod",
   "description": "Allows a single person to pass the night in a server. Displays which player slept so you can yell at them for sleeping.",

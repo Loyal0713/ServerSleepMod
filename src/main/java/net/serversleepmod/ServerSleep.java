@@ -1,7 +1,6 @@
 package net.serversleepmod;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +16,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.level.ServerWorldProperties;
 
 public class ServerSleep implements ModInitializer {
-    public static final Logger LOGGER = LogManager.getLogger("serversleepmod");
+    // public static final Logger LOGGER = LogManager.getLogger("serversleepmod");
 
     @Override
     public void onInitialize() {
@@ -29,15 +28,19 @@ public class ServerSleep implements ModInitializer {
         server.getWorlds().forEach((world)->{
             List<ServerPlayerEntity> players = world.getPlayers();
             for(PlayerEntity p : players) {
-                if(p.isSleeping()){
-                    skipNight(world, players, p.getUuid());
+                if(p.isSleeping()) {
+                    // make sure player slept for long enough
+                    if (p.getSleepTimer() == 100) {
+                        skipNight(world, players, p);
+
+                    }
                 }
             }
         });
     }
 
     // method that actually skips the night
-    private void skipNight(ServerWorld world, List<ServerPlayerEntity> players, UUID sleeper) {
+    private void skipNight(ServerWorld world, List<ServerPlayerEntity> players, PlayerEntity sleeper) {
         // set world stuff
         if(world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)){
             long l = world.getLevelProperties().getTimeOfDay() + 24000L;
@@ -52,16 +55,12 @@ public class ServerSleep implements ModInitializer {
             ((ServerWorldProperties)world.getLevelProperties()).setThundering(false);
         }
 
-        //sleepers username
-        PlayerEntity sleep = world.getPlayerByUuid(sleeper);
-
         // wake up sleeping players
         players.forEach(p->{
-            if(p.isSleeping()){
-
-                p.sendSystemMessage(new LiteralText(sleep.getEntityName() + " is sleeping"), sleeper);
+            if(p.isSleeping()) {
                 p.wakeUp(false, true);
             }
+            p.sendMessage(new LiteralText(sleeper.getEntityName() + " slept"), true);
         });
     }
 }
