@@ -40,8 +40,9 @@ public class ServerSleep implements ModInitializer {
     private void skipNight(ServerWorld world, List<ServerPlayerEntity> players, PlayerEntity sleeper) {
         // set world stuff
         if(world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)){
-            long l = world.getLevelProperties().getTimeOfDay() + 24000L;
-            world.setTimeOfDay(l - l%24000);
+            int numDays = (int) (world.getLevelProperties().getTimeOfDay() / 24000);
+            long newTime = (numDays+1)*24000;
+            world.setTimeOfDay(newTime);
         }
 
         // reset weather
