@@ -8,9 +8,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.LiteralTextContent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.level.ServerWorldProperties;
-import net.minecraft.text.Text;
 
 public class ServerSleep implements ModInitializer {
     // public static final Logger LOGGER = LogManager.getLogger("serversleepmod");
@@ -58,7 +58,7 @@ public class ServerSleep implements ModInitializer {
             if(p.isSleeping()) {
                 p.wakeUp(false, true);
             }
-            p.sendMessage(Text.of(sleeper.getEntityName() + " slept"), true);
+            p.sendMessage(new LiteralTextContent(sleeper.getEntityName() + " slept"), true);
         });
     }
 }

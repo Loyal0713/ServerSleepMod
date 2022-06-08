@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "serversleepmod",
-  "version": "1.0.2",
+  "version": "1.0.3",
 
   "name": "Server Sleep Mod",
   "description": "Allows a single person to pass the night in a server. Displays which player slept so you can yell at them for sleeping.",
@@ -22,9 +22,9 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.13.3",
+    "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.19.x",
     "java": ">=17"
   }
 }
